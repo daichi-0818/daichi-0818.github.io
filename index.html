@@ -478,8 +478,8 @@
         </div>
         <div class="grid">
           <div class="field wide"><div class="lbl">Approach</div><div class="val">Feature engineering over multi-indicator behavioral data, pseudo-labeling, XGBoost / LightGBM, <b>SHAP</b> interpretation, statistical testing. Dockerized inference, spec grounded in academic literature.</div></div>
-          <div class="field"><div class="lbl">Measured (self-built 3-axis harness, ~475k rows)</div><div class="val"><div class="metrics"><span class="metric tnum">rank ρ 0.94 (median)</span><span class="metric tnum">SHAP top-5 = 99% of attribution</span><span class="metric tnum">Precision@1% 62%</span></div></div></div>
-          <div class="field cc"><div class="lbl">Why the honest number</div><div class="val">The eye-catching "100%" precision was a self-consistent artifact of predicted labels; I dual-measured against the true pseudo-labels and report the honest 62%. Verification-first, even when it's less flattering.</div></div>
+          <div class="field"><div class="lbl">Measured &amp; reported to client (self-built 3-axis harness, ~475k rows)</div><div class="val"><div class="metrics"><span class="metric tnum">rank ρ 0.94 (median)</span><span class="metric tnum">SHAP top-5 = 99% of attribution</span></div></div></div>
+          <div class="field cc"><div class="lbl">Verification-first</div><div class="val">Built the evaluation harness myself and validated the metrics' honesty — including the gap between predicted-label and true-label precision — rather than citing the flattering self-consistent figure.</div></div>
         </div>
       </div>
 
