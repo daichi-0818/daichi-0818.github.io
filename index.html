@@ -509,19 +509,49 @@
     <div class="sec-head"><span class="num">03</span><h2>Open source</h2></div>
     <p class="sec-intro">
       The strongest answer to "can you actually use Claude Code?" is public code.
-      Both repos are viewable end to end — the first <em>is</em> my method, extracted
-      and stripped of anything internal.
+      Every repo below was genericized from real engineering work — the techniques
+      are mine, the business logic and credentials are stripped out entirely.
     </p>
     <div class="oss">
       <div class="card lead">
         <h3>claude-code-ops-kit</h3>
-        <p>Practical operating machinery for running AI coding agents semi-autonomously without silent rot: a launchd watchdog, discipline skills (grill / self-audit / systematic-debugging), an assume-broken verifier subagent, and the Loop Engineering write-up.</p>
-        <span class="lic">MIT · 2026 · github.com/daichi-0818/claude-code-ops-kit</span>
+        <p>Operating machinery for running AI coding agents semi-autonomously without silent rot: a launchd watchdog, discipline skills (grill / self-audit / systematic-debugging), an assume-broken verifier subagent, and the Loop Engineering write-up.</p>
+        <span class="lic">MIT · github.com/daichi-0818/claude-code-ops-kit</span>
+      </div>
+      <div class="card lead">
+        <h3>safe-rpa-kit</h3>
+        <p>Safe-by-default browser automation: dry-run default, a fail-closed write gate, and read-back verification — so RPA writes are impossible by accident, off by default, and not trusted until re-read.</p>
+        <span class="lic">MIT · github.com/daichi-0818/safe-rpa-kit</span>
+      </div>
+      <div class="card lead">
+        <h3>silent-failure-checks</h3>
+        <p>Lightweight declarative data-quality checks specialized for silent failures: empty-write-disguised-as-fresh, regression-vs-chronic, and two-source reconciliation.</p>
+        <span class="lic">MIT · github.com/daichi-0818/silent-failure-checks</span>
       </div>
       <div class="card">
         <h3>fastapi-llm-rag-starter</h3>
-        <p>Production-ready FastAPI + RAG starter with pluggable LLM providers (Claude / Gemini), ChromaDB, and offline-runnable tests. CI green, pinned.</p>
-        <span class="lic">MIT · CI green · pinned</span>
+        <p>Production-ready FastAPI + RAG starter with pluggable LLM providers (Claude / Gemini), ChromaDB, and offline-runnable tests. CI green.</p>
+        <span class="lic">MIT · CI green</span>
+      </div>
+      <div class="card">
+        <h3>idempotent-backfill-pattern</h3>
+        <p>Daily sync and weekly backfill that converge on one dedup-by-latest upsert, so re-running any range is safe.</p>
+        <span class="lic">MIT · github.com/daichi-0818/idempotent-backfill-pattern</span>
+      </div>
+      <div class="card">
+        <h3>fernet-versioned-secrets</h3>
+        <p>Versioned Fernet secret encryption (enc:v1: prefix) with backward-compatible plaintext passthrough for gradual, low-risk rollout.</p>
+        <span class="lic">MIT · github.com/daichi-0818/fernet-versioned-secrets</span>
+      </div>
+      <div class="card">
+        <h3>cloud-run-jobs-etl-scaffold</h3>
+        <p>One Docker image, N Cloud Run Jobs dispatched by an env var — a scaffold for parallel ETL with Scheduler wiring and the env-reset gotchas documented.</p>
+        <span class="lic">MIT · github.com/daichi-0818/cloud-run-jobs-etl-scaffold</span>
+      </div>
+      <div class="card">
+        <h3>phash-dedup</h3>
+        <p>Perceptual-hash near-duplicate image clustering: DCT pHash + Hamming threshold + Union-Find to collapse duplicates to one representative.</p>
+        <span class="lic">MIT · github.com/daichi-0818/phash-dedup</span>
       </div>
     </div>
   </div>
