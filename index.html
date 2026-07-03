@@ -148,6 +148,23 @@
   .stack .k { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.03em; background: #FCFCFD; }
   .stack .v { color: #2C3138; }
 
+  .ai-badge { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--accent-wash); border: 1px solid rgba(27,77,216,0.25); padding: 2px 7px; border-radius: 2px; white-space: nowrap; }
+  .grp-head { margin: 38px 0 18px; display: flex; align-items: baseline; gap: 12px; }
+  .grp-head .gt { font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); font-weight: 600; }
+  .grp-head .gd { font-size: 13px; color: var(--muted); }
+  .grp-head.ai .gt { color: var(--accent); }
+  .platform-panel { background: var(--panel); border: 1px solid var(--hair); border-left: 3px solid var(--accent); border-radius: 4px; padding: 20px 24px; margin-bottom: 6px; }
+  .platform-panel .pt { font-weight: 650; font-size: 17px; }
+  .platform-panel p { font-size: 14px; color: var(--muted); margin: 8px 0 0; max-width: 74ch; }
+  .sys-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .sys { background: var(--panel); border: 1px solid var(--hair); border-radius: 4px; padding: 18px 20px; }
+  .sys.aisys { border-color: rgba(27,77,216,0.35); }
+  .sys .sh { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .sys h4 { margin: 0; font-size: 15.5px; font-weight: 640; }
+  .sys .desc { font-size: 13.5px; color: #2C3138; margin-top: 8px; line-height: 1.55; }
+  .sys .row2 { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hair); font-family: var(--mono); font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+  .sys .row2 b { color: var(--ink); font-weight: 600; }
+
   .also { margin-top: 26px; }
   .also .also-lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
   .also-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); border-radius: 4px; overflow: hidden; }
@@ -251,154 +268,239 @@
 
 <section>
   <div class="wrap">
-    <div class="sec-head"><span class="num">02</span><h2>Selected work</h2></div>
+    <div class="sec-head"><span class="num">02</span><h2>Systems built — in detail</h2></div>
     <p class="sec-intro">
-      Company names are withheld; the systems and outcomes are not. Each entry
-      states the problem, how it was built, and where Claude Code carried weight.
+      Company names are withheld; the systems and outcomes are not. These are
+      distinct systems — not features of one app. Several run on a shared platform
+      I architect; others are standalone products. AI-forward systems are marked.
     </p>
 
+    <div class="grp-head ai"><span class="gt">AI systems</span><span class="gd">— the AI-forward work, highlighted</span></div>
     <div class="gallery">
 
       <div class="proj">
         <div class="proj-top">
-          <h3>Sales &amp; SEO analytics SaaS</h3>
-          <span class="tag">Production · current role</span>
+          <h3>Diffusion image-editing tool</h3>
+          <span class="ai-badge">AI core</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Ranking, ad-spend and sales signals for 29–31 stores were scattered across tools; sales had no single operational dashboard.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">FastAPI + SQLAlchemy backend on BigQuery (60+ tables), React 19 front end, GA4 / Search Console / ValueSERP ingestion on Cloud Run.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val">172 keywords tracked, 107+ API endpoints in daily operation.</div><div class="metrics"><span class="metric tnum">16,807-line API → 13 routers</span><span class="metric">pre-commit / pre-push gates</span></div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Drove the large refactor with a review subagent on every diff; hooks enforced the quality gate so nothing merged un-checked.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">A business image-retouch task needed consistent, reproducible edits at volume — too slow and uneven by hand.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Diffusion-based editing (PyTorch, Diffusers, Transformers, Gradio, Florence-2) with GGUF quantization (Q2–Q8) for 12GB-VRAM machines, Lightning LoRA 4-step generation, JP→ZH/EN prompt auto-translation, and seed / temperature control for reproducibility.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">2m30s → 41s / image (70%)</span><span class="metric">low- &amp; high-VRAM pipelines</span></div></div></div>
+          <div class="field cc"><div class="lbl">Why it matters</div><div class="val">Same diffusion / VLM muscle that got me recruited onto the physical-AI research program below.</div></div>
         </div>
       </div>
 
       <div class="proj">
         <div class="proj-top">
-          <h3>Media-sync automation (Playwright RPA)</h3>
-          <span class="tag">Production · current role</span>
+          <h3>AI assistant engine with guardrails</h3>
+          <span class="ai-badge">AI core</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Store rosters had to be pushed to 18 external media platforms by hand across 23 stores — slow and error-prone.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">Parallel Playwright automation with a dry-run → production staging gate and read-back verification before any write is trusted.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">name-match 88.95% → 91.0%</span><span class="metric tnum">mapping 97–99%</span><span class="metric">duplicates cut ~36%, reversibly</span></div></div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Adapters per platform generated and adversarially verified; a monitoring gap (a job absent from the alert list) was caught the same way.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Department-facing AI chat had to answer from real data without inventing figures — a hard requirement where a hallucinated number is a business incident.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">A shared FastAPI + SSE chat engine with runtime-enforced guardrails: model output is checked against real values and fabricated numbers are blocked outright, verified with prompt-injection tests.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric">pytest 27/27</span><span class="metric">E2E 7/7</span><span class="metric">injection blocked</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Adversarial verification (assume-broken) caught guard-enforcement gaps before they shipped.</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Flight-booking AI &amp; actuals analytics</h3>
+          <span class="ai-badge">AI core</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Travel arrangement was manual, and real spend wasn't visible to management in any structured form.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">An AI-assisted booking flow plus an actuals pipeline that ingests real application history into BigQuery for management dashboards.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">5,756 records</span><span class="metric tnum">~¥47.3M tracked</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Built and verified data-first — every figure traced back to source rows.</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Internal knowledge RAG &amp; assistant</h3>
+          <span class="ai-badge">AI core</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Company knowledge was scattered; people couldn't find prior decisions or documents quickly.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Vector-search RAG over the document base with an AI chat and a feedback loop, kept lean on cost.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">~¥5,400 / month</span><span class="metric">feedback loop</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The same RAG pattern I later published as an open-source starter (below).</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="platform-panel">
+      <div class="pt">A multi-department business platform I architect</div>
+      <p>A shared platform hosting many <em>distinct</em> department systems on one FastAPI + BigQuery + React foundation. Each system below is its own product with its own users; the platform is the base they run on, the auth / permissions layer, and the deployment pipeline.</p>
+    </div>
+
+    <div class="grp-head"><span class="gt">Systems on the platform</span></div>
+    <div class="gallery">
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Sales &amp; SEO analytics</h3>
+          <span class="tag">Production</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Ranking, ad-spend and sales signals for 29–31 stores were scattered; sales had no single operational dashboard, and rank-tracking config gaps went unnoticed.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">FastAPI + SQLAlchemy on BigQuery (60+ tables), React 19 front end, GA4 / Search Console / ValueSERP ingestion on Cloud Run.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">172 keywords · 107+ endpoints</span><span class="metric tnum">16,807-line API → 13 routers</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Drove the large refactor with a review subagent on every diff; hooks enforced the quality gate.</div></div>
         </div>
       </div>
 
       <div class="proj">
         <div class="proj-top">
           <h3>Data platform &amp; direct-DB migration</h3>
-          <span class="tag">Production · current role</span>
+          <span class="tag">Production</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Fragile scraping fed the analytics layer; a five-day silent ETL failure once went unnoticed until a stakeholder flagged wrong numbers.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">Retired scraping for a direct source-DB connection (116 tables / 1,388 columns analyzed); split collection into 9 parallel Cloud Run Jobs.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">full refresh in ~30 min</span><span class="metric">5-axis health check</span><span class="metric">9h TZ skew normalized</span></div></div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The silent-failure lesson here became the watchdog now in my OSS kit — active monitoring instead of hoping someone notices.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Fragile scraping fed the analytics layer; a five-day silent ETL failure once went unnoticed until wrong numbers surfaced.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Retired scraping for a direct source-DB connection (cp932-aware), split collection into 9 parallel Cloud Run Jobs, added a 5-axis health check.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">116 tables / 1,388 cols</span><span class="metric tnum">full refresh ~30 min</span><span class="metric">9h TZ skew fixed</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The silent-failure lesson here became the watchdog in my OSS kit.</div></div>
         </div>
       </div>
 
-      <div class="proj">
-        <div class="proj-top">
-          <h3>AI image editing — diffusion retouch tool</h3>
-          <span class="tag">Production · current role</span>
-        </div>
-        <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">A business image-retouch task needed consistent, reproducible edits at volume — too slow and uneven by hand.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">Diffusion-based editing (PyTorch, Diffusers, Transformers, Gradio, Florence-2) with GGUF quantization for 12GB-VRAM machines, Lightning LoRA 4-step generation, and seed / temperature control for reproducibility.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">2m30s → 41s / image (70%)</span><span class="metric">low- &amp; high-VRAM pipelines</span></div></div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Same diffusion / VLM implementation muscle that got me recruited onto the physical-AI research program below.</div></div>
-        </div>
-      </div>
+    </div>
 
+    <div class="sys-grid" style="margin-top:14px">
+      <div class="sys">
+        <div class="sh"><h4>Recruiting ATS</h4></div>
+        <div class="desc">A hiring-management system that parses application emails with LLM extraction and auto-registers candidates — turning an inbox into structured hiring data.</div>
+        <div class="row2"><b>Tech:</b> dedicated worktree · 6 ats_* tables + 710-row master seed · LLM email extraction<br><b>Status:</b> production, zero-loss verified against live data</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Recruiting analytics</h4></div>
+        <div class="desc">Reconciles interview schedules with a separate data source via hashed-name matching to analyze inflow, interviews, hires and re-engagement.</div>
+        <div class="row2"><b>Tech:</b> hashed-name reconciliation · BigQuery<br><b>Outcome:</b> 74.8% auto-linking · shipped to 12 users</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Inbound reception board</h4></div>
+        <div class="desc">A multilingual front-desk board for foreign-visitor reception, with a confirm-before-submit step and searchable reception history.</div>
+        <div class="row2"><b>Tech:</b> 5 languages · confirm popup · 48-tab permissions<br><b>Scale:</b> 28 stores in production</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>IT cost management</h4></div>
+        <div class="desc">Auto-ingests cloud spend and PDF invoices into one place, subscriptions included, for a single view of IT cost.</div>
+        <div class="row2"><b>Tech:</b> GCP cost auto-ingest + PDF parsing · subscription tracking<br><b>Status:</b> production (8 subscriptions managed)</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Ad-cost management</h4></div>
+        <div class="desc">Lets a department self-upload ad-spend data and manage it without engineering involvement — fully self-running once shipped.</div>
+        <div class="row2"><b>Tech:</b> self-upload workflow<br><b>Status:</b> complete, self-operating</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Production-dept system</h4></div>
+        <div class="desc">Handles the production team's assessment, ad-effect measurement and asset management.</div>
+        <div class="row2"><b>Tech:</b> platform module<br><b>Status:</b> in operation</div>
+      </div>
+      <div class="sys aisys">
+        <div class="sh"><h4>SNS analytics aggregation</h4><span class="ai-badge">AI-adjacent</span></div>
+        <div class="desc">Collects and aggregates cross-platform social-video metrics — including accounts that block cloud-IP scrapers — and makes collection logs visible.</div>
+        <div class="row2"><b>Tech:</b> Apify · residential-IP yt-dlp fallback · launchd · GCS logs · chat alerts<br><b>Note:</b> a candidate for standalone SaaS</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>In-app feedback</h4></div>
+        <div class="desc">Lets users file bug reports directly from the screen they're on, routed to the right place with notifications.</div>
+        <div class="row2"><b>Tech:</b> in-screen capture · notification routing<br><b>Status:</b> production</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Opportunity &amp; reservation analytics</h4></div>
+        <div class="desc">Opportunity-loss analysis and a reservation board running on the shared platform.</div>
+        <div class="row2"><b>Tech:</b> platform modules on FastAPI + BigQuery<br><b>Status:</b> in operation</div>
+      </div>
+    </div>
+
+    <div class="grp-head"><span class="gt">Standalone products</span><span class="gd">— separate repos, not on the platform</span></div>
+    <div class="gallery">
       <div class="proj">
         <div class="proj-top">
-          <h3>SNS analytics aggregation (TikTok / YouTube / Instagram)</h3>
-          <span class="tag">Production · current role</span>
+          <h3>Media-sync automation (Playwright RPA)</h3>
+          <span class="tag">Production · standalone</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Cross-platform social metrics had to be collected reliably for reporting — including accounts that block cloud-IP scrapers.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">A two-tier collector (weekly full refresh + daily backfill, identical MERGE logic) on Apify, with a residential-IP yt-dlp fallback for restricted accounts, plus GCS + chat log visibility and freshness monitoring.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val">Silent zero-row skips surfaced and fixed; a candidate for productization as a standalone SaaS.</div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The "is a zero really zero, or a failed collection?" discipline (now a self-audit skill) came straight from this system.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Store rosters had to be pushed to 18 external media platforms by hand across 23 stores — slow and error-prone, and a wrong write is destructive.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Parallel Playwright automation with a dry-run → production gate, read-back verification before any write is trusted, Fernet-encrypted credentials, and a DB-keepalive watchdog.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">name-match 88.95% → 91.0%</span><span class="metric tnum">mapping 97–99%</span><span class="metric">dupes −36%, reversibly</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Its safe-write pattern is the basis of an open-source RPA kit I'm extracting.</div></div>
         </div>
       </div>
+    </div>
+
+    <div class="sys-grid" style="margin-top:14px">
+      <div class="sys">
+        <div class="sh"><h4>Engagement bot — cloud migration</h4></div>
+        <div class="desc">Moved a store-engagement bot to a serverless cloud setup and fixed a paging failure caused by an upstream URL change.</div>
+        <div class="row2"><b>Tech:</b> Cloud Run Jobs · GCS FUSE · Firestore · Google-login dashboard<br><b>Outcome:</b> 23 stores · under ¥1,000/mo · paging 52 → 780</div>
+      </div>
+      <div class="sys aisys">
+        <div class="sh"><h4>Internal video auto-editor</h4><span class="ai-badge">AI-adjacent</span></div>
+        <div class="desc">Automates editing of internal videos — transcription, video processing and LLM summarization.</div>
+        <div class="row2"><b>Tech:</b> Whisper · FFmpeg · LLM<br><b>Status:</b> tooling (no published metrics)</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Photoshop-automation extension</h4></div>
+        <div class="desc">A Chrome extension that automates image-editing-software operations for the internal team.</div>
+        <div class="row2"><b>Tech:</b> Chrome extension · Photoshop scripting<br><b>Status:</b> internal tool</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Expense-management hub</h4></div>
+        <div class="desc">A hub for managing IT expenses and costs, connected to the platform's cost data.</div>
+        <div class="row2"><b>Tech:</b> expense hub<br><b>Status:</b> internal tool</div>
+      </div>
+    </div>
+
+    <div class="grp-head ai"><span class="gt">Research &amp; contract</span></div>
+    <div class="gallery">
 
       <div class="proj">
         <div class="proj-top">
           <h3>Agricultural physical AI — robot imitation learning</h3>
-          <span class="tag">Research · 3-yr grant · confirmed, ramping</span>
+          <span class="ai-badge">AI research</span>
         </div>
         <div class="grid">
           <div class="field wide"><div class="lbl">The project</div><div class="val">A 10-person, grant-funded program teaching a two-armed agricultural robot (grip + cut end-effector) generalizable behavior via a <b>VLM + Diffusion Policy</b> hybrid over a 224-dim action space (14×16 chunk), trained on A100 GPUs. Target: an international journal paper.</div></div>
-          <div class="field"><div class="lbl">My role</div><div class="val">Brought in for <b>diffusion-model &amp; VLM implementation know-how</b> carried over from production image work (Diffusers / PyTorch / GGUF quant / LoRA · Florence-2); literature review; <b>paper co-author</b>.</div></div>
-          <div class="field"><div class="lbl">Not my scope</div><div class="val">Imitation-learning specifics, robot control, and mechanical / sensor design sit with the core specialists. Active work begins at the convening phase; I'm in catch-up now.</div></div>
-          <div class="field cc"><div class="lbl">Why it matters</div><div class="val">Direct evidence that my generative-AI practice reaches into embodied, physical AI — not just text and images.</div></div>
+          <div class="field"><div class="lbl">My role</div><div class="val">Brought in for <b>diffusion-model &amp; VLM implementation know-how</b> from production image work (Diffusers / PyTorch / GGUF / LoRA · Florence-2); literature review; <b>paper co-author</b>.</div></div>
+          <div class="field"><div class="lbl">Not my scope</div><div class="val">Imitation-learning specifics, robot control and mechanical / sensor design sit with core specialists. Active work begins at the convening phase; I'm in catch-up now.</div></div>
+          <div class="field cc"><div class="lbl">Why it matters</div><div class="val">Direct evidence my generative-AI practice reaches into embodied, physical AI.</div></div>
         </div>
       </div>
 
       <div class="proj">
         <div class="proj-top">
           <h3>Addiction-risk classification model</h3>
-          <span class="tag">Contract · concurrent</span>
+          <span class="ai-badge">ML</span>
         </div>
         <div class="grid">
           <div class="field"><div class="lbl">Approach</div><div class="val">Feature engineering over multi-indicator behavioral data, pseudo-labeling, XGBoost / LightGBM, <b>SHAP</b> interpretation, statistical testing.</div></div>
-          <div class="field"><div class="lbl">Delivery</div><div class="val">Dockerized inference service, spec grounded in academic literature; delivered on a monthly cadence (development / acceptance phase).</div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Kept a full model-development cadence inside a limited weekly window — team-scale output solo.</div></div>
+          <div class="field"><div class="lbl">Delivery</div><div class="val">Dockerized inference, spec grounded in academic literature; monthly cadence (development / acceptance phase).</div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Full model-development cadence inside a limited weekly window — team-scale output solo.</div></div>
         </div>
       </div>
 
+    </div>
+
+    <div class="grp-head"><span class="gt">Prior role</span></div>
+    <div class="gallery">
       <div class="proj">
         <div class="proj-top">
           <h3>Google-ads review AI — data pipeline &amp; RAG</h3>
-          <span class="tag">Prior role · Adecco, 3y4m</span>
+          <span class="tag">Adecco · 3y4m</span>
         </div>
         <div class="grid">
           <div class="field wide"><div class="lbl">Problem</div><div class="val">Ad-review throughput and consistency across a multinational team; a review AI needed clean training data and retrievable precedent.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">End-to-end on GCP: annotation design, data cleaning / categorization, <b>training-set packaging</b>, and a review RAG (vectorized precedent, Gemini / Cloud Run).</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">End-to-end on GCP: annotation design, cleaning / categorization, <b>training-set packaging</b>, and a review RAG (vectorized precedent, Gemini / Cloud Run).</div></div>
           <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">60 min → 5 min (12×)</span><span class="metric tnum">~400 hrs/month saved</span></div></div></div>
-          <div class="field cc"><div class="lbl">Foundation</div><div class="val">The GCP data-to-training-to-RAG pipeline here is the same skillset now behind my BigQuery / Cloud Run production work.</div></div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="also">
-      <div class="also-lbl">Also built at the same company — a fuller picture</div>
-      <div class="also-grid">
-        <div class="also-item">
-          <div class="t">Flight-booking AI &amp; actuals analytics</div>
-          <div class="d">An internal travel-arrangement AI plus a real-spend statistics pipeline over 5,756 records (~¥47M) feeding management dashboards.</div>
-          <span class="s">BigQuery · LLM · dashboards</span>
-        </div>
-        <div class="also-item">
-          <div class="t">Internal knowledge RAG &amp; assistant</div>
-          <div class="d">Company-wide semantic search and an AI chat with a feedback loop, running at roughly ¥5,400/month.</div>
-          <span class="s">ChromaDB · embeddings · RAG</span>
-        </div>
-        <div class="also-item">
-          <div class="t">Recruiting ATS</div>
-          <div class="d">Application emails parsed by LLM extraction and auto-registered — turning an inbox into structured hiring data.</div>
-          <span class="s">LLM extraction · pipeline</span>
-        </div>
-        <div class="also-item">
-          <div class="t">Engagement bot — cloud migration</div>
-          <div class="d">Moved a 23-store engagement bot to Cloud Run Jobs with GCS FUSE and Firestore, running under ¥1,000/month.</div>
-          <span class="s">Cloud Run Jobs · GCS · Firestore</span>
-        </div>
-        <div class="also-item">
-          <div class="t">Back-office automation suite</div>
-          <div class="d">18+ production scripts for reporting, cost tracking and budget/ROI estimation — LLM + data pipelines with multi-model fallback.</div>
-          <span class="s">Cloud Scheduler · Secret Manager</span>
-        </div>
-        <div class="also-item">
-          <div class="t">Image classification tool</div>
-          <div class="d">An ONNX-Runtime classifier managing 210k+ photos, with batch optimization and a caching layer.</div>
-          <span class="s">ONNX Runtime · Gradio</span>
+          <div class="field cc"><div class="lbl">Foundation</div><div class="val">The GCP data-to-training-to-RAG pipeline that underpins my current work.</div></div>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
