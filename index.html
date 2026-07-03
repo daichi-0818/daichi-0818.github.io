@@ -148,6 +148,14 @@
   .stack .k { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.03em; background: #FCFCFD; }
   .stack .v { color: #2C3138; }
 
+  .also { margin-top: 26px; }
+  .also .also-lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); border-radius: 4px; overflow: hidden; }
+  .also-item { background: var(--panel); padding: 15px 18px; }
+  .also-item .t { font-weight: 640; font-size: 14.5px; }
+  .also-item .d { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+  .also-item .s { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-top: 7px; display: block; }
+
   footer { padding: 40px 0 60px; }
   footer .fnote { font-family: var(--mono); font-size: 12px; color: var(--faint); }
 
@@ -292,6 +300,32 @@
 
       <div class="proj">
         <div class="proj-top">
+          <h3>AI image editing — diffusion retouch tool</h3>
+          <span class="tag">Production · current role</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">A business image-retouch task needed consistent, reproducible edits at volume — too slow and uneven by hand.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Diffusion-based editing (PyTorch, Diffusers, Transformers, Gradio, Florence-2) with GGUF quantization for 12GB-VRAM machines, Lightning LoRA 4-step generation, and seed / temperature control for reproducibility.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">2m30s → 41s / image (70%)</span><span class="metric">low- &amp; high-VRAM pipelines</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Same diffusion / VLM implementation muscle that got me recruited onto the physical-AI research program below.</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>SNS analytics aggregation (TikTok / YouTube / Instagram)</h3>
+          <span class="tag">Production · current role</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Cross-platform social metrics had to be collected reliably for reporting — including accounts that block cloud-IP scrapers.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">A two-tier collector (weekly full refresh + daily backfill, identical MERGE logic) on Apify, with a residential-IP yt-dlp fallback for restricted accounts, plus GCS + chat log visibility and freshness monitoring.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val">Silent zero-row skips surfaced and fixed; a candidate for productization as a standalone SaaS.</div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The "is a zero really zero, or a failed collection?" discipline (now a self-audit skill) came straight from this system.</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
           <h3>Agricultural physical AI — robot imitation learning</h3>
           <span class="tag">Research · 3-yr grant · confirmed, ramping</span>
         </div>
@@ -328,6 +362,42 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="also">
+      <div class="also-lbl">Also built at the same company — a fuller picture</div>
+      <div class="also-grid">
+        <div class="also-item">
+          <div class="t">Flight-booking AI &amp; actuals analytics</div>
+          <div class="d">An internal travel-arrangement AI plus a real-spend statistics pipeline over 5,756 records (~¥47M) feeding management dashboards.</div>
+          <span class="s">BigQuery · LLM · dashboards</span>
+        </div>
+        <div class="also-item">
+          <div class="t">Internal knowledge RAG &amp; assistant</div>
+          <div class="d">Company-wide semantic search and an AI chat with a feedback loop, running at roughly ¥5,400/month.</div>
+          <span class="s">ChromaDB · embeddings · RAG</span>
+        </div>
+        <div class="also-item">
+          <div class="t">Recruiting ATS</div>
+          <div class="d">Application emails parsed by LLM extraction and auto-registered — turning an inbox into structured hiring data.</div>
+          <span class="s">LLM extraction · pipeline</span>
+        </div>
+        <div class="also-item">
+          <div class="t">Engagement bot — cloud migration</div>
+          <div class="d">Moved a 23-store engagement bot to Cloud Run Jobs with GCS FUSE and Firestore, running under ¥1,000/month.</div>
+          <span class="s">Cloud Run Jobs · GCS · Firestore</span>
+        </div>
+        <div class="also-item">
+          <div class="t">Back-office automation suite</div>
+          <div class="d">18+ production scripts for reporting, cost tracking and budget/ROI estimation — LLM + data pipelines with multi-model fallback.</div>
+          <span class="s">Cloud Scheduler · Secret Manager</span>
+        </div>
+        <div class="also-item">
+          <div class="t">Image classification tool</div>
+          <div class="d">An ONNX-Runtime classifier managing 210k+ photos, with batch optimization and a caching layer.</div>
+          <span class="s">ONNX Runtime · Gradio</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
