@@ -1,0 +1,573 @@
+<title>Daichi Zaha — AI Engineering Portfolio</title>
+<style>
+  :root {
+    --paper: #F6F7F9;
+    --panel: #FFFFFF;
+    --ink: #14171C;
+    --muted: #5B6472;
+    --faint: #8B93A0;
+    --hair: #E2E5EA;
+    --accent: #1B4DD8;
+    --accent-wash: #EDF1FC;
+    --ok: #2E7D5B;
+    --warn: #B77410;
+    --crit: #C2402F;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Menlo", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .muted { color: var(--muted); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(27,77,216,0.28); }
+  a:hover { border-bottom-color: var(--accent); }
+  h1, h2, h3 { text-wrap: balance; line-height: 1.15; margin: 0; }
+  code, .data { font-family: var(--mono); }
+
+  /* ---- Header / Hero ---- */
+  header {
+    border-bottom: 1px solid var(--hair);
+    background:
+      linear-gradient(180deg, #FBFCFD 0%, var(--paper) 100%);
+  }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 0; font-family: var(--mono); font-size: 12px; color: var(--muted);
+  }
+  .topbar .id { color: var(--ink); font-weight: 600; letter-spacing: 0.02em; }
+  .topbar .links { display: flex; gap: 20px; }
+  .topbar .links a { border: none; color: var(--muted); }
+  .topbar .links a:hover { color: var(--accent); }
+  .hero { padding: 46px 0 58px; }
+  .hero h1 {
+    font-size: clamp(30px, 5.2vw, 52px);
+    font-weight: 680;
+    letter-spacing: -0.02em;
+    max-width: 20ch;
+  }
+  .hero .lede {
+    margin-top: 22px; max-width: 62ch; font-size: 18px; color: #2C3138;
+  }
+  .hero .lede strong { color: var(--ink); font-weight: 640; }
+  .meta-row {
+    margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .chip {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em;
+    padding: 5px 11px; border: 1px solid var(--hair); border-radius: 2px;
+    background: var(--panel); color: var(--muted);
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+
+  /* ---- Section scaffolding ---- */
+  section { padding: 54px 0; border-bottom: 1px solid var(--hair); }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 30px; }
+  .sec-head h2 { font-size: 25px; font-weight: 650; letter-spacing: -0.01em; }
+  .sec-head .num { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+  .sec-intro { max-width: 68ch; color: var(--muted); margin: -14px 0 30px; }
+
+  /* ---- The loop diagram ---- */
+  .loop {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  }
+  .loop .step {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 3px;
+    padding: 16px 15px; position: relative;
+  }
+  .loop .step .k { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: 0.08em; }
+  .loop .step .t { font-weight: 640; margin-top: 6px; font-size: 15px; }
+  .loop .step .d { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+  .loop .step.judge { border-color: rgba(27,77,216,0.45); box-shadow: inset 0 0 0 1px rgba(27,77,216,0.08); }
+  .loop .step.judge .k { color: var(--accent); }
+
+  .principles { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; }
+  .principle { display: flex; gap: 12px; align-items: flex-start; }
+  .principle .mark { font-family: var(--mono); color: var(--accent); font-size: 13px; margin-top: 2px; }
+  .principle .body { font-size: 14px; }
+  .principle .body b { font-weight: 640; }
+  .principle .body span { color: var(--muted); }
+
+  /* ---- Instrument note (watchdog echo) ---- */
+  .readout {
+    margin-top: 28px; background: #101319; border-radius: 4px; padding: 18px 20px;
+    font-family: var(--mono); font-size: 13px; color: #C9D1DC; overflow-x: auto;
+  }
+  .readout .line { white-space: pre; }
+  .readout .ok { color: #58C08A; }
+  .readout .warn { color: #E0A64B; }
+  .readout .dim { color: #6B7686; }
+
+  /* ---- Project gallery ---- */
+  .gallery { display: flex; flex-direction: column; gap: 18px; }
+  .proj {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 4px;
+    padding: 24px 26px;
+  }
+  .proj-top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .proj h3 { font-size: 19px; font-weight: 650; }
+  .proj .tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
+  .proj .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 30px; margin-top: 16px; }
+  .field { padding: 10px 0; border-top: 1px solid var(--hair); }
+  .field .lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+  .field .val { font-size: 14px; margin-top: 4px; color: #2C3138; }
+  .field.cc { grid-column: 1 / -1; background: var(--accent-wash); margin: 10px -12px 0; padding: 12px; border-radius: 3px; border-top: none; }
+  .field.cc .lbl { color: var(--accent); }
+  .field.wide { grid-column: 1 / -1; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .metric { font-family: var(--mono); font-size: 12px; background: var(--paper); border: 1px solid var(--hair); padding: 3px 9px; border-radius: 2px; color: var(--ink); }
+  .metric.tnum { font-variant-numeric: tabular-nums; }
+
+  /* ---- OSS feature ---- */
+  .oss { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .oss .card { background: var(--panel); border: 1px solid var(--hair); border-radius: 4px; padding: 22px 24px; }
+  .oss .card.lead { border-color: rgba(27,77,216,0.4); }
+  .oss .card h3 { font-size: 17px; font-family: var(--mono); font-weight: 600; }
+  .oss .card p { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
+  .oss .card .lic { font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 14px; display: block; }
+
+  /* ---- Stack table ---- */
+  .stack { display: grid; grid-template-columns: 140px 1fr; gap: 0; border: 1px solid var(--hair); border-radius: 4px; overflow: hidden; background: var(--panel); }
+  .stack .row { display: contents; }
+  .stack .k, .stack .v { padding: 11px 16px; border-top: 1px solid var(--hair); font-size: 14px; }
+  .stack .row:first-child .k, .stack .row:first-child .v { border-top: none; }
+  .stack .k { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.03em; background: #FCFCFD; }
+  .stack .v { color: #2C3138; }
+
+  .ai-badge { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--accent-wash); border: 1px solid rgba(27,77,216,0.25); padding: 2px 7px; border-radius: 2px; white-space: nowrap; }
+  .grp-head { margin: 38px 0 18px; display: flex; align-items: baseline; gap: 12px; }
+  .grp-head .gt { font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); font-weight: 600; }
+  .grp-head .gd { font-size: 13px; color: var(--muted); }
+  .grp-head.ai .gt { color: var(--accent); }
+  .platform-panel { background: var(--panel); border: 1px solid var(--hair); border-left: 3px solid var(--accent); border-radius: 4px; padding: 20px 24px; margin-bottom: 6px; }
+  .platform-panel .pt { font-weight: 650; font-size: 17px; }
+  .platform-panel p { font-size: 14px; color: var(--muted); margin: 8px 0 0; max-width: 74ch; }
+  .sys-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .sys { background: var(--panel); border: 1px solid var(--hair); border-radius: 4px; padding: 18px 20px; }
+  .sys.aisys { border-color: rgba(27,77,216,0.35); }
+  .sys .sh { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .sys h4 { margin: 0; font-size: 15.5px; font-weight: 640; }
+  .sys .desc { font-size: 13.5px; color: #2C3138; margin-top: 8px; line-height: 1.55; }
+  .sys .row2 { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hair); font-family: var(--mono); font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+  .sys .row2 b { color: var(--ink); font-weight: 600; }
+
+  .also { margin-top: 26px; }
+  .also .also-lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); border-radius: 4px; overflow: hidden; }
+  .also-item { background: var(--panel); padding: 15px 18px; }
+  .also-item .t { font-weight: 640; font-size: 14.5px; }
+  .also-item .d { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+  .also-item .s { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-top: 7px; display: block; }
+
+  footer { padding: 40px 0 60px; }
+  footer .fnote { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+
+  @media (max-width: 720px) {
+    .loop { grid-template-columns: 1fr 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .proj .grid { grid-template-columns: 1fr; }
+    .oss { grid-template-columns: 1fr; }
+    .stack { grid-template-columns: 100px 1fr; }
+  }
+</style>
+
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="id">ZAHA · DAICHI</span>
+      <span class="links">
+        <a href="https://github.com/daichi-0818">github/daichi-0818</a>
+        <span>Fukuoka, JP</span>
+      </span>
+    </div>
+    <div class="hero">
+      <span class="eyebrow">AI Engineering Portfolio</span>
+      <h1>I build production AI systems by engineering the agent loop, not just prompting it.</h1>
+      <p class="lede">
+        AI / ML engineer working in Python × GCP × generative AI. My development
+        happens inside <strong>Claude Code</strong> — but as a built environment:
+        custom skills, role-separated subagents, and hooks that gate changes
+        before they land — a discipline I extracted and open-sourced. This page
+        shows the work and the
+        method behind it.
+      </p>
+      <div class="meta-row">
+        <span class="chip"><b>9</b> daily Cloud Run Jobs</span>
+        <span class="chip">public <b>OSS</b> repos</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>How I develop with Claude Code</h2></div>
+    <p class="sec-intro">
+      The risk of a coding agent isn't a dramatic crash — it's the quiet failure:
+      the job that silently stopped, the number nobody re-checked, the code nobody
+      reads anymore. My workflow is built to make those loud. The core move is
+      separating the hand that writes from the eye that judges.
+    </p>
+
+    <div class="loop">
+      <div class="step">
+        <div class="k">01 · FRAME</div>
+        <div class="t">Grill before build</div>
+        <div class="d">A requirements interview — one question at a time — until inputs, outputs and out-of-scope are written down. Verify the task isn't already solved.</div>
+      </div>
+      <div class="step">
+        <div class="k">02 · GENERATE</div>
+        <div class="t">Agent implements</div>
+        <div class="d">Subagents build against a spec, test-first. Seams agreed up front so tests land on the critical paths.</div>
+      </div>
+      <div class="step judge">
+        <div class="k">03 · JUDGE</div>
+        <div class="t">Adversarial verify</div>
+        <div class="d">A separate read-only agent treats the work as <em>assume-broken</em> and tries to disprove it. Not the author grading its own homework.</div>
+      </div>
+      <div class="step">
+        <div class="k">04 · SHIP</div>
+        <div class="t">Human checkpoint</div>
+        <div class="d">Never auto-merge. A pre-deploy hook runs lint / types / tests. I make the call, then the change goes out.</div>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div class="principle"><span class="mark">//</span><div class="body"><b>Separate generator from judge.</b> <span>Code-reviewer and an "assume broken" verifier are distinct agents from the one that wrote the code.</span></div></div>
+      <div class="principle"><span class="mark">//</span><div class="body"><b>Write the limits before an unattended run.</b> <span>Per-run and retry ceilings are declared up front, not discovered mid-thrash.</span></div></div>
+      <div class="principle"><span class="mark">//</span><div class="body"><b>"Zero" is a claim, not a fact.</b> <span>A self-audit skill checks whether a zero is really zero or a failed fetch, before anything ships.</span></div></div>
+      <div class="principle"><span class="mark">//</span><div class="body"><b>Watch for silent death.</b> <span>A watchdog scans every scheduled job each morning and surfaces the ones that quietly died.</span></div></div>
+    </div>
+
+    <div class="readout" aria-label="Example watchdog output">
+<span class="line">$ launchd-watchdog  <span class="dim"># every morning, read-only</span></span>
+<span class="line"><span class="ok">OK  14</span>  /  <span class="warn">WARN 2</span>  /  scanning scheduled automations</span>
+<span class="line"><span class="dim">— a job that stopped firing weeks ago is no longer invisible</span></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Systems built — in detail</h2></div>
+    <p class="sec-intro">
+      Company names are withheld. These are
+      distinct systems — not features of one app. Several run on a shared platform
+      I architect; others are standalone products. AI-forward systems are marked.
+    </p>
+
+    <div class="grp-head ai"><span class="gt">AI systems</span><span class="gd">— the AI-forward work, highlighted</span></div>
+    <div class="gallery">
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Diffusion image-editing tool</h3>
+          <span class="ai-badge">AI core</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">A business image-retouch task needed consistent, reproducible edits at volume — too slow and uneven by hand.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Diffusion-based editing (PyTorch, Diffusers, Transformers, Gradio, Florence-2) with GGUF quantization (Q2–Q8) for 12GB-VRAM machines, Lightning LoRA 4-step generation, JP→ZH/EN prompt auto-translation, and seed / temperature control for reproducibility.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric">low- &amp; high-VRAM pipelines</span></div></div></div>
+          <div class="field cc"><div class="lbl">Why it matters</div><div class="val">The same diffusion / VLM experience I later brought to physical-AI literature research (below).</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>AI assistant engine with guardrails</h3>
+          <span class="ai-badge">AI core</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Department-facing AI chat had to answer from real data without inventing figures — a hard requirement where a hallucinated number is a business incident.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">A shared FastAPI + SSE chat engine with runtime-enforced guardrails: model output is checked against real values and fabricated numbers are blocked outright, verified with prompt-injection tests.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric">pytest 27/27</span><span class="metric">E2E 7/7</span><span class="metric">injection blocked</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Adversarial verification (assume-broken) caught guard-enforcement gaps before they shipped.</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Flight-booking AI &amp; actuals analytics</h3>
+          <span class="ai-badge">AI core</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Travel arrangement was manual, and real spend wasn't visible to management in any structured form.</div></div>
+          <div class="field wide"><div class="lbl">Approach</div><div class="val">An AI-assisted booking flow plus an actuals pipeline that ingests real application history into BigQuery for management dashboards.</div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Built and verified data-first — every figure traced back to source rows.</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Internal knowledge RAG &amp; assistant</h3>
+          <span class="ai-badge">AI core</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Company knowledge was scattered; people couldn't find prior decisions or documents quickly.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Vector-search RAG over the document base with an AI chat and a feedback loop.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric">feedback loop</span><span class="metric">built; currently stopped</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The same RAG pattern I later published as an open-source starter (below).</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="platform-panel">
+      <div class="pt">A multi-department business platform I architect</div>
+      <p>A shared platform hosting many <em>distinct</em> department systems on one FastAPI + BigQuery + React foundation. Each system below is its own product with its own users; the platform is the base they run on, the auth / permissions layer, and the deployment pipeline.</p>
+    </div>
+
+    <div class="grp-head"><span class="gt">Systems on the platform</span></div>
+    <div class="gallery">
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Sales &amp; SEO analytics</h3>
+          <span class="tag">Production</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Ranking, ad-spend and sales signals across many locations were scattered; sales had no single operational dashboard, and rank-tracking config gaps went unnoticed.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">FastAPI + SQLAlchemy on BigQuery (60+ tables), React 19 front end, GA4 / Search Console / ValueSERP ingestion on Cloud Run.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">172 keywords · 107+ endpoints</span><span class="metric tnum">16,807-line API → 13 routers</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Drove the large refactor with a review subagent on every diff; hooks enforced the quality gate.</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Data platform &amp; direct-DB migration</h3>
+          <span class="tag">Production</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Fragile scraping fed the analytics layer, and silent ETL failures could go unnoticed until wrong numbers surfaced.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Retired scraping for a direct source-DB connection and split collection into 9 parallel Cloud Run Jobs.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">100+ tables</span><span class="metric tnum">full refresh ~30 min</span><span class="metric">9h TZ skew fixed</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The silent-failure lesson here became the watchdog in my OSS kit.</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sys-grid" style="margin-top:14px">
+      <div class="sys">
+        <div class="sh"><h4>Recruiting ATS</h4></div>
+        <div class="desc">A hiring-management system that parses application emails with LLM extraction and auto-registers candidates — turning an inbox into structured hiring data.</div>
+        <div class="row2"><b>Tech:</b> dedicated worktree · LLM email extraction<br><b>Status:</b> production, zero-loss verified against live data</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Recruiting analytics</h4></div>
+        <div class="desc">Reconciles interview schedules with a separate data source via hashed-name matching to analyze inflow, interviews, hires and re-engagement.</div>
+        <div class="row2"><b>Tech:</b> hashed-name reconciliation · BigQuery</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Front-desk board</h4></div>
+        <div class="desc">A front-desk board with a confirm-before-submit step and searchable history.</div>
+        <div class="row2"><b>Tech:</b> confirm popup · searchable history · role-based permissions</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>IT cost management</h4></div>
+        <div class="desc">Auto-ingests cloud spend and PDF invoices into one place, subscriptions included, for a single view of IT cost.</div>
+        <div class="row2"><b>Tech:</b> GCP cost auto-ingest + PDF parsing · subscription tracking<br><b>Status:</b> production</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Ad-cost management</h4></div>
+        <div class="desc">Lets a department self-upload ad-spend data and manage it without engineering involvement — fully self-running once shipped.</div>
+        <div class="row2"><b>Tech:</b> self-upload workflow<br><b>Status:</b> complete, self-operating</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Production-dept system</h4></div>
+        <div class="desc">Handles the production team's assessment, ad-effect measurement and asset management.</div>
+        <div class="row2"><b>Tech:</b> platform module<br><b>Status:</b> in operation</div>
+      </div>
+      <div class="sys aisys">
+        <div class="sh"><h4>SNS analytics aggregation</h4><span class="ai-badge">AI-adjacent</span></div>
+        <div class="desc">Collects and aggregates cross-platform social-video metrics and makes collection logs visible.</div>
+        <div class="row2"><b>Tech:</b> Apify · launchd · GCS logs · chat alerts<br><b>Note:</b> a candidate for standalone SaaS</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>In-app feedback</h4></div>
+        <div class="desc">Lets users file bug reports directly from the screen they're on, routed to the right place with notifications.</div>
+        <div class="row2"><b>Tech:</b> in-screen capture · notification routing<br><b>Status:</b> production</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Opportunity &amp; reservation analytics</h4></div>
+        <div class="desc">Opportunity-loss analysis and a reservation board running on the shared platform.</div>
+        <div class="row2"><b>Tech:</b> platform modules on FastAPI + BigQuery<br><b>Status:</b> in operation</div>
+      </div>
+    </div>
+
+    <div class="grp-head"><span class="gt">Standalone products</span><span class="gd">— separate repos, not on the platform</span></div>
+    <div class="gallery">
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Media-sync automation (Playwright RPA)</h3>
+          <span class="tag">Production · standalone</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Listing data had to be pushed by hand to many external platforms — slow, error-prone, and a wrong write is destructive.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Parallel Playwright automation with a dry-run → production gate, read-back verification before any write is trusted, Fernet-encrypted credentials, and a DB-keepalive watchdog.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">name-match 88.95% → 91.0%</span><span class="metric tnum">mapping 97–99%</span><span class="metric">dupes −36%, reversibly</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Its safe-write pattern is the basis of an open-source RPA kit I'm extracting.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sys-grid" style="margin-top:14px">
+      <div class="sys">
+        <div class="sh"><h4>Engagement bot — cloud migration</h4></div>
+        <div class="desc">Moved an engagement bot to a serverless cloud setup and fixed a paging failure caused by an upstream URL change.</div>
+        <div class="row2"><b>Tech:</b> Cloud Run Jobs · GCS FUSE · Firestore · Google-login dashboard</div>
+      </div>
+      <div class="sys aisys">
+        <div class="sh"><h4>Internal video auto-editor</h4><span class="ai-badge">AI-adjacent</span></div>
+        <div class="desc">Automates editing of internal videos — transcription, video processing and LLM summarization.</div>
+        <div class="row2"><b>Tech:</b> Whisper · FFmpeg · LLM<br><b>Status:</b> tooling (no published metrics)</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Photoshop-automation extension</h4></div>
+        <div class="desc">A Chrome extension that automates image-editing-software operations for the internal team.</div>
+        <div class="row2"><b>Tech:</b> Chrome extension · Photoshop scripting<br><b>Status:</b> internal tool</div>
+      </div>
+      <div class="sys">
+        <div class="sh"><h4>Expense-management hub</h4></div>
+        <div class="desc">A hub for managing IT expenses and costs, connected to the platform's cost data.</div>
+        <div class="row2"><b>Tech:</b> expense hub<br><b>Status:</b> internal tool</div>
+      </div>
+    </div>
+
+    <div class="grp-head ai"><span class="gt">Research &amp; contract</span></div>
+    <div class="gallery">
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Agricultural physical AI — literature review</h3>
+          <span class="ai-badge">AI research</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">My role</div><div class="val">Literature review for an agricultural physical-AI R&amp;D program. Implementation, robot control and mechanical design sit with the core robotics team.</div></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Behavior-based risk classification model (contract)</h3>
+          <span class="ai-badge">ML</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Approach</div><div class="val">Feature engineering over multi-indicator behavioral data, pseudo-labeling, XGBoost / LightGBM, <b>SHAP</b> interpretation, statistical testing. Dockerized inference, spec grounded in academic literature.</div></div>
+          <div class="field wide"><div class="lbl">Status</div><div class="val">Final delivery in Sep 2026. Ported to the client's existing cloud inference stack with a 100% full-output match; wrote a retraining kit verified to reproduce the adopted model's predictions in a fresh environment.</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="grp-head"><span class="gt">Prior role</span></div>
+    <div class="gallery">
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Ad-review AI — data pipeline &amp; RAG</h3>
+          <span class="tag">Prior employer · 3y4m</span>
+        </div>
+        <div class="grid">
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Ad-review throughput and consistency across a multinational team; a review AI needed clean training data and retrievable precedent.</div></div>
+          <div class="field wide"><div class="lbl">Approach</div><div class="val">End-to-end on GCP: annotation design, cleaning / categorization, <b>training-set packaging</b>, and a review RAG (vectorized precedent, LLM / Cloud Run).</div></div>
+          <div class="field cc"><div class="lbl">Foundation</div><div class="val">The GCP data-to-training-to-RAG pipeline that underpins my current work.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Open source</h2></div>
+    <p class="sec-intro">
+      The strongest answer to "can you actually use Claude Code?" is public code.
+      Every repo below was genericized from real engineering work — the techniques
+      are mine, the business logic and credentials are stripped out entirely.
+    </p>
+    <div class="oss">
+      <div class="card lead">
+        <h3>claude-code-ops-kit</h3>
+        <p>Operating machinery for running AI coding agents semi-autonomously without silent rot: a launchd watchdog, discipline skills (grill / self-audit / systematic-debugging), an assume-broken verifier subagent, and the Loop Engineering write-up.</p>
+        <span class="lic">MIT · github.com/daichi-0818/claude-code-ops-kit</span>
+      </div>
+      <div class="card lead">
+        <h3>safe-rpa-kit</h3>
+        <p>Safe-by-default browser automation: dry-run default, a fail-closed write gate, and read-back verification — so RPA writes are impossible by accident, off by default, and not trusted until re-read.</p>
+        <span class="lic">MIT · github.com/daichi-0818/safe-rpa-kit</span>
+      </div>
+      <div class="card lead">
+        <h3>silent-failure-checks</h3>
+        <p>Lightweight declarative data-quality checks specialized for silent failures: empty-write-disguised-as-fresh, regression-vs-chronic, and two-source reconciliation.</p>
+        <span class="lic">MIT · github.com/daichi-0818/silent-failure-checks</span>
+      </div>
+      <div class="card">
+        <h3>fastapi-llm-rag-starter</h3>
+        <p>Production-ready FastAPI + RAG starter with pluggable LLM providers (Claude / Gemini), ChromaDB, and offline-runnable tests. CI green.</p>
+        <span class="lic">github.com/daichi-0818/fastapi-llm-rag-starter</span>
+      </div>
+      <div class="card">
+        <h3>idempotent-backfill-pattern</h3>
+        <p>Daily sync and weekly backfill that converge on one dedup-by-latest upsert, so re-running any range is safe.</p>
+        <span class="lic">MIT · github.com/daichi-0818/idempotent-backfill-pattern</span>
+      </div>
+      <div class="card">
+        <h3>fernet-versioned-secrets</h3>
+        <p>Versioned Fernet secret encryption (enc:v1: prefix) with backward-compatible plaintext passthrough for gradual, low-risk rollout.</p>
+        <span class="lic">MIT · github.com/daichi-0818/fernet-versioned-secrets</span>
+      </div>
+      <div class="card">
+        <h3>cloud-run-jobs-etl-scaffold</h3>
+        <p>One Docker image, N Cloud Run Jobs dispatched by an env var — a scaffold for parallel ETL with Scheduler wiring and the env-reset gotchas documented.</p>
+        <span class="lic">MIT · github.com/daichi-0818/cloud-run-jobs-etl-scaffold</span>
+      </div>
+      <div class="card">
+        <h3>phash-dedup</h3>
+        <p>Perceptual-hash near-duplicate image clustering: DCT pHash + Hamming threshold + Union-Find to collapse duplicates to one representative.</p>
+        <span class="lic">MIT · github.com/daichi-0818/phash-dedup</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Stack</h2></div>
+    <div class="stack">
+      <div class="row"><div class="k">Agent dev</div><div class="v">Claude Code Max — custom skills, role-separated subagents, PreToolUse / PostToolUse hooks, parallel agents · Codex</div></div>
+      <div class="row"><div class="k">Language</div><div class="v">Python (FastAPI, SQLAlchemy 2.0, pydantic v2)</div></div>
+      <div class="row"><div class="k">Cloud</div><div class="v">GCP — Cloud Run, Run Jobs, Scheduler, BigQuery, GCS, Secret Manager, Firestore, Cloud Build, Vertex</div></div>
+      <div class="row"><div class="k">ML / DL</div><div class="v">PyTorch, Diffusers, Transformers · XGBoost, LightGBM, SHAP · data prep → training → evaluation on GCP</div></div>
+      <div class="row"><div class="k">AI / LLM</div><div class="v">Claude / Gemini APIs — Structured Outputs, Prompt Cache · RAG, ChromaDB, embeddings, HITL</div></div>
+      <div class="row"><div class="k">Automation</div><div class="v">Playwright (parallel), Apify, BeautifulSoup</div></div>
+      <div class="row"><div class="k">Frontend</div><div class="v">React</div></div>
+      <div class="row"><div class="k">Quality</div><div class="v">Docker, GitHub Actions, pytest / Vitest / Playwright Test, pre-commit, git worktree</div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="fnote">Daichi Zaha · Fukuoka, Japan · github.com/daichi-0818 · remote · English working proficiency</p>
+  </div>
+</footer>
