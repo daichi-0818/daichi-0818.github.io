@@ -200,14 +200,17 @@
       <p class="lede">
         AI / ML engineer working in Python × GCP × generative AI. My development
         happens inside <strong>Claude Code</strong> — but as a built environment:
-        custom skills, role-separated subagents, and hooks that gate changes
-        before they land — a discipline I extracted and open-sourced. This page
-        shows the work and the
+        ~20 custom skills, 17 role-separated subagents, and hooks that gate every
+        change. The result is <strong>solo output at team scale</strong>, and a
+        discipline I extracted and open-sourced. This page shows the work and the
         method behind it.
       </p>
       <div class="meta-row">
+        <span class="chip"><b>22</b> locations operated</span>
         <span class="chip"><b>9</b> daily Cloud Run Jobs</span>
-        <span class="chip">public <b>OSS</b> repos</span>
+        <span class="chip"><b>60→5 min</b> at prior role (12×)</span>
+        <span class="chip"><b>9</b> public OSS repos</span>
+        <span class="chip">generative AI → <b>physical AI</b></span>
       </div>
     </div>
   </div>
@@ -267,7 +270,7 @@
   <div class="wrap">
     <div class="sec-head"><span class="num">02</span><h2>Systems built — in detail</h2></div>
     <p class="sec-intro">
-      Company names are withheld. These are
+      Company names are withheld; the systems and outcomes are not. These are
       distinct systems — not features of one app. Several run on a shared platform
       I architect; others are standalone products. AI-forward systems are marked.
     </p>
@@ -283,8 +286,8 @@
         <div class="grid">
           <div class="field wide"><div class="lbl">Problem</div><div class="val">A business image-retouch task needed consistent, reproducible edits at volume — too slow and uneven by hand.</div></div>
           <div class="field"><div class="lbl">Approach</div><div class="val">Diffusion-based editing (PyTorch, Diffusers, Transformers, Gradio, Florence-2) with GGUF quantization (Q2–Q8) for 12GB-VRAM machines, Lightning LoRA 4-step generation, JP→ZH/EN prompt auto-translation, and seed / temperature control for reproducibility.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric">low- &amp; high-VRAM pipelines</span></div></div></div>
-          <div class="field cc"><div class="lbl">Why it matters</div><div class="val">The same diffusion / VLM experience I later brought to physical-AI literature research (below).</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">2m30s → 41s / image (70%)</span><span class="metric">low- &amp; high-VRAM pipelines</span></div></div></div>
+          <div class="field cc"><div class="lbl">Why it matters</div><div class="val">Same diffusion / VLM muscle that got me recruited onto the physical-AI research program below.</div></div>
         </div>
       </div>
 
@@ -308,7 +311,8 @@
         </div>
         <div class="grid">
           <div class="field wide"><div class="lbl">Problem</div><div class="val">Travel arrangement was manual, and real spend wasn't visible to management in any structured form.</div></div>
-          <div class="field wide"><div class="lbl">Approach</div><div class="val">An AI-assisted booking flow plus an actuals pipeline that ingests real application history into BigQuery for management dashboards.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">An AI-assisted booking flow plus an actuals pipeline that ingests real application history into BigQuery for management dashboards.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">5,756 records</span><span class="metric tnum">~¥47.3M tracked</span></div></div></div>
           <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Built and verified data-first — every figure traced back to source rows.</div></div>
         </div>
       </div>
@@ -320,8 +324,8 @@
         </div>
         <div class="grid">
           <div class="field wide"><div class="lbl">Problem</div><div class="val">Company knowledge was scattered; people couldn't find prior decisions or documents quickly.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">Vector-search RAG over the document base with an AI chat and a feedback loop.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric">feedback loop</span><span class="metric">built; currently stopped</span></div></div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Vector-search RAG over the document base with an AI chat and a feedback loop, kept lean on cost.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">~¥5,400 / month</span><span class="metric">feedback loop</span></div></div></div>
           <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The same RAG pattern I later published as an open-source starter (below).</div></div>
         </div>
       </div>
@@ -355,9 +359,9 @@
           <span class="tag">Production</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Fragile scraping fed the analytics layer, and silent ETL failures could go unnoticed until wrong numbers surfaced.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">Retired scraping for a direct source-DB connection and split collection into 9 parallel Cloud Run Jobs.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">100+ tables</span><span class="metric tnum">full refresh ~30 min</span><span class="metric">9h TZ skew fixed</span></div></div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Fragile scraping fed the analytics layer; a five-day silent ETL failure once went unnoticed until wrong numbers surfaced.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">Retired scraping for a direct source-DB connection (cp932-aware), split collection into 9 parallel Cloud Run Jobs, added a 5-axis health check.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">116 tables / 1,388 cols</span><span class="metric tnum">full refresh ~30 min</span><span class="metric">9h TZ skew fixed</span></div></div></div>
           <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The silent-failure lesson here became the watchdog in my OSS kit.</div></div>
         </div>
       </div>
@@ -420,7 +424,7 @@
           <span class="tag">Production · standalone</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Listing data had to be pushed by hand to many external platforms — slow, error-prone, and a wrong write is destructive.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Store rosters had to be pushed to 18 external media platforms by hand across 23 stores — slow and error-prone, and a wrong write is destructive.</div></div>
           <div class="field"><div class="lbl">Approach</div><div class="val">Parallel Playwright automation with a dry-run → production gate, read-back verification before any write is trusted, Fernet-encrypted credentials, and a DB-keepalive watchdog.</div></div>
           <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">name-match 88.95% → 91.0%</span><span class="metric tnum">mapping 97–99%</span><span class="metric">dupes −36%, reversibly</span></div></div></div>
           <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Its safe-write pattern is the basis of an open-source RPA kit I'm extracting.</div></div>
@@ -456,22 +460,27 @@
 
       <div class="proj">
         <div class="proj-top">
-          <h3>Agricultural physical AI — literature review</h3>
+          <h3>Agricultural physical AI — robot imitation learning</h3>
           <span class="ai-badge">AI research</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">My role</div><div class="val">Literature review for an agricultural physical-AI R&amp;D program. Implementation, robot control and mechanical design sit with the core robotics team.</div></div>
+          <div class="field wide"><div class="lbl">The project</div><div class="val">A 10-person, grant-funded program teaching a two-armed agricultural robot (grip + cut end-effector) generalizable behavior via a <b>VLM + Diffusion Policy</b> hybrid over a 224-dim action space (14×16 chunk), trained on A100 GPUs. Target: an international journal paper.</div></div>
+          <div class="field"><div class="lbl">My role</div><div class="val">Brought in for <b>diffusion-model &amp; VLM implementation know-how</b> from production image work (Diffusers / PyTorch / GGUF / LoRA · Florence-2); literature review; contributing to a study being prepared for journal submission.</div></div>
+          <div class="field"><div class="lbl">Division of work</div><div class="val">I own the diffusion / VLM implementation and the paper; imitation-learning specifics, robot control and mechanical / sensor design sit with the core robotics specialists.</div></div>
+          <div class="field cc"><div class="lbl">Why it matters</div><div class="val">Direct evidence my generative-AI practice reaches into embodied, physical AI.</div></div>
         </div>
       </div>
 
       <div class="proj">
         <div class="proj-top">
-          <h3>Behavior-based risk classification model (contract)</h3>
+          <h3>Addiction-risk classification model (contract)</h3>
           <span class="ai-badge">ML</span>
         </div>
         <div class="grid">
           <div class="field wide"><div class="lbl">Approach</div><div class="val">Feature engineering over multi-indicator behavioral data, pseudo-labeling, XGBoost / LightGBM, <b>SHAP</b> interpretation, statistical testing. Dockerized inference, spec grounded in academic literature.</div></div>
+          <div class="field"><div class="lbl">Measured &amp; reported to client (self-built 3-axis harness, ~475k rows)</div><div class="val"><div class="metrics"><span class="metric tnum">rank ρ 0.94 (median)</span><span class="metric tnum">SHAP top-5 = 99% of attribution</span></div></div></div>
           <div class="field wide"><div class="lbl">Status</div><div class="val">Final delivery in Sep 2026. Ported to the client's existing cloud inference stack with a 100% full-output match; wrote a retraining kit verified to reproduce the adopted model's predictions in a fresh environment.</div></div>
+          <div class="field cc"><div class="lbl">Verification-first</div><div class="val">Built the evaluation harness myself and validated the metrics' honesty — including the gap between predicted-label and true-label precision — rather than citing the flattering self-consistent figure.</div></div>
         </div>
       </div>
 
@@ -481,13 +490,14 @@
     <div class="gallery">
       <div class="proj">
         <div class="proj-top">
-          <h3>Advertising review AI &amp; RAG assistant</h3>
-          <span class="tag">Prior employer · 3y4m</span>
+          <h3>Google-ads review AI — data pipeline &amp; RAG</h3>
+          <span class="tag">Adecco · 3y4m</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Advertising review operations: answering inquiries about review results meant re-checking the review policies each time, and the review AI needed better retraining data.</div></div>
-          <div class="field wide"><div class="lbl">Approach</div><div class="val">Held a project lead / project manager role for the team. Review-AI development: error analysis, retraining-data preparation and improvement proposals. With teammates in a supporting role, designed and built an <b>internal RAG assistant</b> that searched the review policies and drafted answers with cited sources; a person made the final call.</div></div>
-          <div class="field cc"><div class="lbl">Foundation</div><div class="val">Turning review know-how into an AI tool the team used in daily work.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Advertising review operations: answering inquiries about review results meant re-checking the review policies each time, and the review AI needed better training data.</div></div>
+          <div class="field wide"><div class="lbl">Approach</div><div class="val">Held a project lead / project manager role for the team throughout. Review-AI accuracy work on GCP: training-data pipeline, cleaning / preparation, model retraining and evaluation. With teammates in a supporting role, designed and built an <b>internal RAG assistant</b> (Gemini / Cloud Run) that searched the review policies and drafted answers with cited sources; a person made the final call.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">60 min → 5 min (12×)</span><span class="metric tnum">~400 hrs/month saved</span></div></div></div>
+          <div class="field cc"><div class="lbl">Foundation</div><div class="val">Turning review know-how into an AI tool the team used in daily work — the GCP data-to-training-to-RAG pipeline that underpins my current work.</div></div>
         </div>
       </div>
     </div>
@@ -540,6 +550,11 @@
         <span class="lic">MIT · github.com/daichi-0818/cloud-run-jobs-etl-scaffold</span>
       </div>
       <div class="card">
+        <h3>oboegaki</h3>
+        <p>File-based long-term memory for AI agents: one fact per file with an index, so context survives across sessions. 55 tests.</p>
+        <span class="lic">MIT · github.com/daichi-0818/oboegaki</span>
+      </div>
+      <div class="card">
         <h3>phash-dedup</h3>
         <p>Perceptual-hash near-duplicate image clustering: DCT pHash + Hamming threshold + Union-Find to collapse duplicates to one representative.</p>
         <span class="lic">MIT · github.com/daichi-0818/phash-dedup</span>
@@ -552,13 +567,14 @@
   <div class="wrap">
     <div class="sec-head"><span class="num">04</span><h2>Stack</h2></div>
     <div class="stack">
-      <div class="row"><div class="k">Agent dev</div><div class="v">Claude Code Max — custom skills, role-separated subagents, PreToolUse / PostToolUse hooks, parallel agents · Codex</div></div>
-      <div class="row"><div class="k">Language</div><div class="v">Python (FastAPI, SQLAlchemy 2.0, pydantic v2)</div></div>
-      <div class="row"><div class="k">Cloud</div><div class="v">GCP — Cloud Run, Run Jobs, Scheduler, BigQuery, GCS, Secret Manager, Firestore, Cloud Build</div></div>
-      <div class="row"><div class="k">ML / DL</div><div class="v">PyTorch, Diffusers, Transformers · XGBoost, LightGBM, SHAP · data prep → training → evaluation</div></div>
-      <div class="row"><div class="k">AI / LLM</div><div class="v">Claude / Gemini APIs — Structured Outputs, Prompt Cache · RAG, ChromaDB, embeddings, HITL</div></div>
-      <div class="row"><div class="k">Automation</div><div class="v">Playwright (parallel), Apify, BeautifulSoup</div></div>
-      <div class="row"><div class="k">Frontend</div><div class="v">React</div></div>
+      <div class="row"><div class="k">Agent dev</div><div class="v">Claude Code (Max plan) — custom skills, role-separated subagents, PreToolUse / PostToolUse hooks, MCP, parallel agents · Codex · Gemini / Antigravity · Cursor</div></div>
+      <div class="row"><div class="k">Language</div><div class="v">Python (FastAPI, asyncio, SQLAlchemy 2.0 + Alembic, pydantic v2) · TypeScript · Node (ESM)</div></div>
+      <div class="row"><div class="k">Cloud</div><div class="v">GCP — Cloud Run, Run Jobs, Scheduler, BigQuery, GCS, Secret Manager, Firestore, Cloud Build, Vertex</div></div>
+      <div class="row"><div class="k">ML / DL</div><div class="v">PyTorch, Diffusers, Transformers · XGBoost, LightGBM, SHAP · data prep → training → evaluation on GCP</div></div>
+      <div class="row"><div class="k">AI / LLM</div><div class="v">Claude / GPT / Gemini APIs — Batch, Structured Outputs, Prompt Cache · RAG, ChromaDB, embeddings, HITL</div></div>
+      <div class="row"><div class="k">Local models</div><div class="v">Gemma, Qwen, Bonsai 2, Whisper · Ollama, llama.cpp, MLX (Apple Silicon) · Qwen-Image-Edit, Florence-2, FLUX.1, Stable Diffusion 1.5 · ComfyUI, GGUF quantization, Lightning LoRA</div></div>
+        <div class="row"><div class="k">Automation</div><div class="v">Playwright (parallel, 18 platforms), Apify, BeautifulSoup</div></div>
+      <div class="row"><div class="k">Frontend</div><div class="v">React 18/19, Vite, TailwindCSS, React Query, Recharts</div></div>
       <div class="row"><div class="k">Quality</div><div class="v">Docker, GitHub Actions, pytest / Vitest / Playwright Test, pre-commit, git worktree</div></div>
     </div>
   </div>
