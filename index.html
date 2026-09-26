@@ -200,13 +200,13 @@
       <p class="lede">
         AI / ML engineer working in Python × GCP × generative AI. My development
         happens inside <strong>Claude Code</strong> — but as a built environment:
-        ~20 custom skills, 17 role-separated subagents, and hooks that gate every
-        change. The result is <strong>solo output at team scale</strong>, and a
+        ~20 custom skills (some adapted from public ones), 18 role-separated subagents, and hooks that gate
+        changes before they land. The result is <strong>solo output at team scale</strong>, and a
         discipline I extracted and open-sourced. This page shows the work and the
         method behind it.
       </p>
       <div class="meta-row">
-        <span class="chip"><b>22</b> locations operated</span>
+        <span class="chip"><b>22</b> locations · <b>11</b> departments served</span>
         <span class="chip"><b>9</b> daily Cloud Run Jobs</span>
         <span class="chip"><b>60→5 min</b> at prior role (12×)</span>
         <span class="chip"><b>9</b> public OSS repos</span>
@@ -270,7 +270,7 @@
   <div class="wrap">
     <div class="sec-head"><span class="num">02</span><h2>Systems built — in detail</h2></div>
     <p class="sec-intro">
-      Company names are withheld; the systems and outcomes are not. These are
+      The current employer, its internal system names and the contract clients are withheld; the systems themselves and their outcomes are described. These are
       distinct systems — not features of one app. Several run on a shared platform
       I architect; others are standalone products. AI-forward systems are marked.
     </p>
@@ -284,7 +284,7 @@
           <span class="ai-badge">AI core</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">A business image-retouch task needed consistent, reproducible edits at volume — too slow and uneven by hand.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">A business image-editing task needed consistent, reproducible edits at volume — too slow and uneven by hand.</div></div>
           <div class="field"><div class="lbl">Approach</div><div class="val">Diffusion-based editing (PyTorch, Diffusers, Transformers, Gradio, Florence-2) with GGUF quantization (Q2–Q8) for 12GB-VRAM machines, Lightning LoRA 4-step generation, JP→ZH/EN prompt auto-translation, and seed / temperature control for reproducibility.</div></div>
           <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">2m30s → 41s / image (70%)</span><span class="metric">low- &amp; high-VRAM pipelines</span></div></div></div>
           <div class="field cc"><div class="lbl">Why it matters</div><div class="val">Same diffusion / VLM muscle that got me recruited onto the physical-AI research program below.</div></div>
@@ -293,14 +293,14 @@
 
       <div class="proj">
         <div class="proj-top">
-          <h3>AI assistant engine with guardrails</h3>
+          <h3>Local-LLM guided-chat prototype with guardrails</h3>
           <span class="ai-badge">AI core</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Department-facing AI chat had to answer from real data without inventing figures — a hard requirement where a hallucinated number is a business incident.</div></div>
-          <div class="field"><div class="lbl">Approach</div><div class="val">A shared FastAPI + SSE chat engine with runtime-enforced guardrails: model output is checked against real values and fabricated numbers are blocked outright, verified with prompt-injection tests.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric">pytest 27/27</span><span class="metric">E2E 7/7</span><span class="metric">injection blocked</span></div></div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Adversarial verification (assume-broken) caught guard-enforcement gaps before they shipped.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">A guided chat that runs on a local LLM and an embedding model only, and must answer from real data without inventing figures — a hallucinated amount is a business incident.</div></div>
+          <div class="field"><div class="lbl">Approach</div><div class="val">A prototype running on a local LLM (Gemma) and an embedding model only: structured filters narrow the candidates (SQL intended for production), vector search finds the closest matches, the LLM composes the conversation, and a guard checks the amounts in the answer against the source data.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric">integration tests 7/7 on real hardware</span><span class="metric">60 concurrent connections, zero errors</span><span class="metric">status: prototype</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Developed inside Claude Code with the generator / judge separation described above.</div></div>
         </div>
       </div>
 
@@ -312,7 +312,7 @@
         <div class="grid">
           <div class="field wide"><div class="lbl">Problem</div><div class="val">Travel arrangement was manual, and real spend wasn't visible to management in any structured form.</div></div>
           <div class="field"><div class="lbl">Approach</div><div class="val">An AI-assisted booking flow plus an actuals pipeline that ingests real application history into BigQuery for management dashboards.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">5,756 records</span><span class="metric tnum">~¥47.3M tracked</span></div></div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">5,756 records</span><span class="metric tnum">~¥47M tracked</span></div></div></div>
           <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Built and verified data-first — every figure traced back to source rows.</div></div>
         </div>
       </div>
@@ -349,7 +349,7 @@
           <div class="field wide"><div class="lbl">Problem</div><div class="val">Ranking, ad-spend and sales signals across many locations were scattered; sales had no single operational dashboard, and rank-tracking config gaps went unnoticed.</div></div>
           <div class="field"><div class="lbl">Approach</div><div class="val">FastAPI + SQLAlchemy on BigQuery (60+ tables), React 19 front end, GA4 / Search Console / ValueSERP ingestion on Cloud Run.</div></div>
           <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">172 keywords · 107+ endpoints</span><span class="metric tnum">16,807-line API → 13 routers</span></div></div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Drove the large refactor with a review subagent on every diff; hooks enforced the quality gate.</div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Drove the large refactor inside Claude Code; pre-commit / pre-push hooks enforced the quality gate.</div></div>
         </div>
       </div>
 
@@ -359,10 +359,10 @@
           <span class="tag">Production</span>
         </div>
         <div class="grid">
-          <div class="field wide"><div class="lbl">Problem</div><div class="val">Fragile scraping fed the analytics layer; a five-day silent ETL failure once went unnoticed until wrong numbers surfaced.</div></div>
+          <div class="field wide"><div class="lbl">Problem</div><div class="val">Fragile scraping fed the analytics layer, and silent ETL failures could go unnoticed until wrong numbers surfaced.</div></div>
           <div class="field"><div class="lbl">Approach</div><div class="val">Retired scraping for a direct source-DB connection (cp932-aware), split collection into 9 parallel Cloud Run Jobs, added a 5-axis health check.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">116 tables / 1,388 cols</span><span class="metric tnum">full refresh ~30 min</span><span class="metric">9h TZ skew fixed</span></div></div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">The silent-failure lesson here became the watchdog in my OSS kit.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">116 tables / 1,388 cols</span><span class="metric tnum">full refresh ~30 min</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Silent failures like these are what the monitoring patterns in my OSS kit target.</div></div>
         </div>
       </div>
 
@@ -372,7 +372,7 @@
       <div class="sys">
         <div class="sh"><h4>Recruiting ATS</h4></div>
         <div class="desc">A hiring-management system that parses application emails with LLM extraction and auto-registers candidates — turning an inbox into structured hiring data.</div>
-        <div class="row2"><b>Tech:</b> dedicated worktree · LLM email extraction<br><b>Status:</b> production, zero-loss verified against live data</div>
+        <div class="row2"><b>Tech:</b> dedicated worktree · LLM email extraction<br><b>Status:</b> production — the recruiting team migrated from the old process (being retired in stages); ~20 users in the first month</div>
       </div>
       <div class="sys">
         <div class="sh"><h4>Recruiting analytics</h4></div>
@@ -426,8 +426,8 @@
         <div class="grid">
           <div class="field wide"><div class="lbl">Problem</div><div class="val">Store rosters had to be pushed to 18 external media platforms by hand across 23 stores — slow and error-prone, and a wrong write is destructive.</div></div>
           <div class="field"><div class="lbl">Approach</div><div class="val">Parallel Playwright automation with a dry-run → production gate, read-back verification before any write is trusted, Fernet-encrypted credentials, and a DB-keepalive watchdog.</div></div>
-          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">name-match 88.95% → 91.0%</span><span class="metric tnum">mapping 97–99%</span><span class="metric">dupes −36%, reversibly</span></div></div></div>
-          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Its safe-write pattern is the basis of an open-source RPA kit I'm extracting.</div></div>
+          <div class="field"><div class="lbl">Outcome</div><div class="val"><div class="metrics"><span class="metric tnum">name-match 88.95% → 91.0%</span><span class="metric tnum">mapping 97–99%</span><span class="metric">duplicates removed: ≈36% less prod data, reversibly</span><span class="metric">9h TZ skew fixed (≈210k rows)</span></div></div></div>
+          <div class="field cc"><div class="lbl">Claude Code</div><div class="val">Its safe-write pattern is the basis of the open-source safe-rpa-kit below.</div></div>
         </div>
       </div>
     </div>
@@ -439,9 +439,9 @@
         <div class="row2"><b>Tech:</b> Cloud Run Jobs · GCS FUSE · Firestore · Google-login dashboard</div>
       </div>
       <div class="sys aisys">
-        <div class="sh"><h4>Internal video auto-editor</h4><span class="ai-badge">AI-adjacent</span></div>
-        <div class="desc">Automates editing of internal videos — transcription, video processing and LLM summarization.</div>
-        <div class="row2"><b>Tech:</b> Whisper · FFmpeg · LLM<br><b>Status:</b> tooling (no published metrics)</div>
+        <div class="sh"><h4>Video auto-editor (MVP)</h4><span class="ai-badge">AI-adjacent</span></div>
+        <div class="desc">An MVP that automates editing of stream recordings by combining transcription (Whisper) with an LLM (Claude); refined over three passes on a 64-minute recording.</div>
+        <div class="row2"><b>Tech:</b> Whisper · FFmpeg · LLM<br><b>Status:</b> MVP</div>
       </div>
       <div class="sys">
         <div class="sh"><h4>Photoshop-automation extension</h4></div>
@@ -466,7 +466,7 @@
         <div class="grid">
           <div class="field wide"><div class="lbl">The project</div><div class="val">A 10-person, grant-funded program teaching a two-armed agricultural robot (grip + cut end-effector) generalizable behavior via a <b>VLM + Diffusion Policy</b> hybrid over a 224-dim action space (14×16 chunk), trained on A100 GPUs. Target: an international journal paper.</div></div>
           <div class="field"><div class="lbl">My role</div><div class="val">Brought in for <b>diffusion-model &amp; VLM implementation know-how</b> from production image work (Diffusers / PyTorch / GGUF / LoRA · Florence-2); literature review; contributing to a study being prepared for journal submission.</div></div>
-          <div class="field"><div class="lbl">Division of work</div><div class="val">I own the diffusion / VLM implementation and the paper; imitation-learning specifics, robot control and mechanical / sensor design sit with the core robotics specialists.</div></div>
+          <div class="field"><div class="lbl">Division of work</div><div class="val">I contribute the diffusion / VLM implementation know-how, the literature review and planned co-authorship of the paper; imitation-learning specifics, robot control and mechanical / sensor design sit with the core robotics specialists.</div></div>
           <div class="field cc"><div class="lbl">Why it matters</div><div class="val">Direct evidence my generative-AI practice reaches into embodied, physical AI.</div></div>
         </div>
       </div>
@@ -478,8 +478,8 @@
         </div>
         <div class="grid">
           <div class="field wide"><div class="lbl">Approach</div><div class="val">Feature engineering over multi-indicator behavioral data, pseudo-labeling, XGBoost / LightGBM, <b>SHAP</b> interpretation, statistical testing. Dockerized inference, spec grounded in academic literature.</div></div>
-          <div class="field"><div class="lbl">Measured &amp; reported to client (self-built 3-axis harness, ~475k rows)</div><div class="val"><div class="metrics"><span class="metric tnum">rank ρ 0.94 (median)</span><span class="metric tnum">SHAP top-5 = 99% of attribution</span></div></div></div>
-          <div class="field wide"><div class="lbl">Status</div><div class="val">Final delivery in Sep 2026. Ported to the client's existing cloud inference stack with a 100% full-output match; wrote a retraining kit verified to reproduce the adopted model's predictions in a fresh environment.</div></div>
+          <div class="field"><div class="lbl">Measured &amp; reported to client (self-built 3-axis harness, ~470k rows)</div><div class="val"><div class="metrics"><span class="metric tnum">rank ρ 0.94 (median)</span><span class="metric tnum">SHAP top-5 = 99% of attribution</span></div></div></div>
+          <div class="field wide"><div class="lbl">Status</div><div class="val">Final delivery made in Sep 2026 (client acceptance in progress). Ported to the client's existing cloud inference stack with a 100% full-output match; wrote a retraining kit verified to reproduce the adopted model's predictions in a fresh environment.</div></div>
           <div class="field cc"><div class="lbl">Verification-first</div><div class="val">Built the evaluation harness myself and validated the metrics' honesty — including the gap between predicted-label and true-label precision — rather than citing the flattering self-consistent figure.</div></div>
         </div>
       </div>
@@ -510,8 +510,8 @@
     <div class="sec-head"><span class="num">03</span><h2>Open source</h2></div>
     <p class="sec-intro">
       The strongest answer to "can you actually use Claude Code?" is public code.
-      Every repo below was genericized from real engineering work — the techniques
-      are mine, the business logic and credentials are stripped out entirely.
+      Every repo below was genericized from real engineering work — the business logic
+      and credentials are stripped out entirely (a few skills are adapted from public ones).
     </p>
     <div class="oss">
       <div class="card lead">
